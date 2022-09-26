@@ -1,5 +1,6 @@
 body {
     font-family: Georgia;
+    margin: 0;
 }
 
 #baner {
@@ -19,17 +20,16 @@ body {
 
 .zdjecie {
     width: 20%;
+    float: left;
 }
 
 .opis {
-    /* idk */
+    clear: both;
+    display: inline;
 }
 
-.linia {
-    /* idk */
-}
-
-#lewy, #prawy {
+#lewy,
+#prawy {
     background-color: #005B4F;
     color: white;
     text-align: center;
@@ -40,7 +40,7 @@ body {
 
 img {
     padding: 20px;
-    border: 100%;
+    border-radius: 100%;
 }
 
 h2 {
@@ -50,4 +50,12 @@ h2 {
 
 a {
     color: white;
+}
+
+h1 {
+    margin: 0;
+}
+
+.linia {
+    clear: both;
 }
