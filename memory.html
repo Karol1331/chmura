@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMORY</title>
+    <style>
+        /*#plansza {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }*/
+        #plansza {
+            display: grid;
+        }
+        .pole, .pole-click, .pole-win {
+            background-color: red;
+            width: 250px;
+            height: 250px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 34px;
+            color: white;
+            /*float: left;*/
+        }
+        .pole-click {
+            background-color: blue;
+        }
+        .pole-win {
+            background-color: blue;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <select name="" id="poziom">
+        <option value="2">2x2</option>
+        <option value="4">4x4</option>
+        <option value="8">8x8</option>
+    </select>
+    
+    <button name="button" onclick="start()">klik</button>
+    <div id="plansza"></div>
+    <p id="wynik"></p>
+    <script>
+        var t;
+        var wynik;
+        var ruchy;
+        function start(){
+            wynik = 0;
+            ruchy = 0;
+            plansza.innerHTML = "";
+            plansza.style.gridTemplateColumns = "repeat(" + poziom.value + ", 1fr)";
+            let ilosc = poziom.value * poziom.value;
+            for(let i = 1; i <= ilosc; i++)
+            {
+                let pole = document.createElement("div");
+                pole.classList.add("pole");
+                pole.id = i;
+                pole.addEventListener("click", klik);
+                //pole.setAttribute("onclick", "klik()");
+                //if(i % poziom.value == 0) pole.classList.add("clear");
+                plansza.appendChild(pole);
+            }
+            t = [ilosc + 1];
+            let x = 1;
+            for (let i = 1; i <= ilosc; i+= 2)
+            {
+                t[i] = x;
+                t[i + 1] = x++;
+            }
+            for (let i = 1; i <= ilosc; i++)
+            {
+                let x = Math.floor(Math.random() * 100) % poziom.value + 1;
+                let y = t[i];
+                t[i] = t[x];
+                t[x] = y;
+            }
+            console.log(t);
+        }
+        function klik(e) {
+            var prev = plansza.querySelector(".pole-click");
+            let akt = e.target;
+            if(prev == null) 
+            {
+                akt.className = "pole-click";
+                akt.innerHTML = t[akt.id];
+            }
+            else if (akt.id == prev.id) return;
+            else if(t[akt.id] == t[prev.id])
+            {
+                wynik++;
+                console.log("AKTUALNY WYNIK: " + wynik);
+                akt.className = "pole-win";
+                akt.innerHTML = t[akt.id];
+                prev.className = "pole-win";
+                akt.removeEventListener("click", klik);
+                prev.removeEventListener("click", klik);
+                
+            }
+            else 
+            {
+                prev.className = "pole";
+                prev.innerHTML = "";
+                akt.className = "pole-click";
+                akt.innerHTML = t[akt.id];
+            }
+
+            ruchy++;
+
+            if (plansza.querySelector(".pole") == null) {
+                alert("Brawo! Wygrano grę w " + ruchy + "kliknięciach! Punkty = " + wynik);
+            }
+        }
+        
+    </script>
+  
+</body>
+</html>
