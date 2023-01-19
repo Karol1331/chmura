@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMORY</title>
+    <style>
+        /*#plansza {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }*/
+        #plansza {
+            display: grid;
+        }
+        .pole, .pole-click, .pole-win {
+            background-color: red;
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 34px;
+            color: white;
+            /*float: left;*/
+        }
+        .pole-click {
+            background-color: blue;
+        }
+        .pole-win {
+            background-color: gold;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div id="timer"></div>
+        <div id="score"></div>
+        <div id="kliki"></div>
+    </section>
+    <select name="" id="poziom">
+        <option value="2">2x2</option>
+        <option value="4">4x4</option>
+        <option value="8">8x8</option>
+    </select>
+    <label>Wersja 1<input type="radio" name="versja" id="v1"></label>
+    <label>Wersja 2<input type="radio" name="versja" id="v2"></label>
+    
+    <button name="button" onclick="start()">klik</button>
+    <div id="plansza"></div>
+    <p id="wynik"></p>
+    <script>
+        var t;
+        var wynik;
+        var ruchy;
+        var czas;
+        var timerInterwal;
+        function start(){
+            wynik = 0;
+            ruchy = 0;
+            czas = 0;
+
+            kliki.innerHTML = "Kliknięcia: " + ruchy;
+            score.innerHTML = "WYNIK: " + wynik;
+            timerInterwal = setInterval(timing, 1000);
+
+            plansza.innerHTML = "";
+            plansza.style.gridTemplateColumns = "repeat(" + poziom.value + ", 1fr)";
+            let ilosc = poziom.value * poziom.value;
+            for(let i = 1; i <= ilosc; i++)
+            {
+                let pole = document.createElement("div");
+                pole.classList.add("pole");
+                pole.id = i;
+                pole.addEventListener("click", klik);
+                //pole.setAttribute("onclick", "klik()");
+                //if(i % poziom.value == 0) pole.classList.add("clear");
+                plansza.appendChild(pole);
+            }
+            t = [ilosc + 1];
+            let x = 1;
+            for (let i = 1; i <= ilosc; i+= 2)
+            {
+                t[i] = x;
+                t[i + 1] = x++;
+            }
+            for (let i = 1; i <= ilosc; i++)
+            {
+                let x = Math.floor(Math.random() * 100) % poziom.value + 1;
+                let y = t[i];
+                t[i] = t[x];
+                t[x] = y;
+            }
+            console.log(t);
+        }
+        function klik(e) {
+            var prev = plansza.querySelector(".pole-click");
+            let akt = e.target;
+            if(prev == null) 
+            {
+                akt.className = "pole-click";
+                akt.innerHTML = t[akt.id];
+            }
+            else if (akt.id == prev.id) return;
+            else if(t[akt.id] == t[prev.id])
+            {
+                wynik++;
+                //console.log("AKTUALNY WYNIK: " + wynik);
+                score.innerHTML = "WYNIK: " + wynik;
+                akt.className = "pole-win";
+                akt.innerHTML = t[akt.id];
+                prev.className = "pole-win";
+                akt.removeEventListener("click", klik);
+                prev.removeEventListener("click", klik);
+                
+            }
+            else 
+            {
+                if (v1.checked) 
+                {
+                    prev.className = "pole";
+                    prev.innerHTML = "";
+                    akt.className = "pole-click";
+                    akt.innerHTML = t[akt.id];
+                }
+                else
+                {
+                    akt.className = "pole-click";
+                    akt.innerHTML = t[akt.id];
+                    setTimeout(function() {
+                        prev.className = akt.className = "pole";
+                        prev.innerHTML = akt.innerHTML = "";
+                    }, 250)
+                }
+                
+                
+            }
+
+            ruchy++;
+            kliki.innerHTML = "Kliknięcia: " + ruchy;
+
+            if (plansza.querySelector(".pole") == null) {
+                alert("Wygrano!");
+                clearInterval(timerInterwal);
+            }
+        }
+
+        function timing()
+        {
+            czas += 1;
+            timer.innerHTML = "CZAS: " + czas + "s";
+        }
+        
+    </script>
+  
+</body>
+</html>
