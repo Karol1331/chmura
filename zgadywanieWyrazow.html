@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .zle {
+            background-color: brown;
+        }
+        .good {
+            background-color: green;
+        }
+    </style>
+</head>
+<body onload="start()">
+    <div id="divHasla"></div>
+    <hr>
+    <div id="alfabet"></div>
+    <hr>
+    <div id="zycie"></div>
+    <script>
+        const hasla = ["CLEANCODE", "SKAUCI"];
+        let aktualneHaslo;
+        let zgadywaneHaslo = "";
+        let hp = 5;
+        function start() 
+        {
+            for (let i = 65; i <= 90; i++)
+            {
+                let litera = document.createElement("button");
+                //litera.addEventListener("click", "odkryj");
+                litera.setAttribute("onclick", "odkryj('" + String.fromCharCode(i) + "')");
+                litera.innerHTML = String.fromCharCode(i);
+                litera.id = litera.innerHTML;
+                alfabet.appendChild(litera);
+            }
+            aktualneHaslo = hasla[Math.floor(Math.random() * (1 - 0 + 1)) + 0];
+            for (let i = 0; i < aktualneHaslo.length; i++)
+            {
+                zgadywaneHaslo += "_";
+            }
+            divHasla.innerHTML = zgadywaneHaslo;
+            zycie.innerHTML = "HP = " + hp;
+        }
+
+        function odkryj(x)
+        {
+            let czyjest = false;
+            for (let i = 0; i < aktualneHaslo.length; i++) {
+                if (aktualneHaslo.charAt(i) == x)
+                {
+                    czyjest = true;
+                    let hasloArr = zgadywaneHaslo.split("");
+                    hasloArr[i] = x;
+                    zgadywaneHaslo = hasloArr.join("");
+                }
+            }
+            if (czyjest) 
+            {
+                divHasla.innerHTML = zgadywaneHaslo;
+                document.getElementById(x).className = "good";
+            }
+            else
+            {
+                hp--;
+                document.getElementById(x).className = "zle";
+                zycie.innerHTML = "HP = " + hp;
+                if (hp <= 0) 
+                {
+                    alert("Przegrana!");
+                    location.reload();
+                }
+            }
+            if (zgadywaneHaslo == aktualneHaslo) 
+            {
+                alert("Wygrana!");
+                location.reload();
+            }
+            document.getElementById(x).removeAttribute("onclick");
+        }
+    </script>
+</body>
+</html>
