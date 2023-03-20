@@ -1,0 +1,43 @@
+T: Kwerendy - zapytania
+1) Zapytania (kwerendy)
+  - umożliwiają dostęp do danych w jednej lub wielu tabellach
+  - automatycznie wybierają i przetwarzają dane, np. wykonywanie obliczeń, zmiana wartości,
+  sortowanie rekordów
+  - usuwanie danych z tabeli
+  - tworzenie tabel
+  - łączenie informacji pochodzących z wielu tabel
+  - wprowadzanie zmian w tabelach
+2) Kategorie zapytań (kwerend)
+  a) wybierające - prosty sposób wyświetlania informacji pochodzących z wielu tabel
+  b) funkcjonalne:
+      - tworzące tabele
+      - aktualizujące
+      - dołączające
+      - usuwające
+  c) krzyżowe - tworzenie złożonych zestawień informacyjnych
+  d) SQL
+      - składające
+      - przekazujące
+      - definiujące dane
+3) Narzędzia do tworzenia kwerend
+  a) język SQL - strukturalny język zapytań
+  b) język QBE - metoda formułowania zapytań oparta na szablonie i technice 'drag-and-drop'
+4) Kwerendy wybierające
+  - wybór informacji z jednej lub wielu tabel
+  - definicja statycznych i danymicznych warunków wyboru rekordów
+  - konstruowanie wyrażeń i wykonywanie działań matematycznych na wartościach w polach
+  - formatowanie i sortowanie wyświetlanych danych
+5) Kryteria wyboru rekordów - operatory:
+  a) opratory porównania: <, >, <=, >=, <>
+  b) operator LIKE - porównianie z zadanym wzorcem z użyciem symboli zastępczych:
+      ? - pojedynczy znak
+      * - dowolny ciąg znaków'
+      # - pojedyncza cyfra
+      [b-t] - dowolny znak z podanego zakresu
+      ![b-t] - dowolny znak nie należący do podanego zakresu
+  c) inne operatory:
+      IN (lista wartości) - należy do zbioru
+      BETWEEN ... AND ... - przedział wartości
+      IS NULL - sprawdzenie wartości pustej
+6) Kwerendy parametryczne
+  - to rodzaj kwerendy wybierającej, która po uruchomieniu pobiera od użytkownika parametry kwerendy
