@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S-N-A-K-E</title>
+    <style>
+        #plansza {
+            border: 1px solid black;
+            background-color: greenyellow;
+            height: 750px;
+            width: 750px;
+        }
+        .snakeBody {
+            background-color: black;
+            height: 10px;
+            width: 10px;
+            position: absolute;
+        }
+        #jablko {
+            border-radius: 100%;
+            height: 10px;
+            width: 10px;
+            position: absolute;
+            background-color: red;
+        }
+    </style>
+</head>
+<body onload="spawnFruit()">
+    <div id="plansza">
+        <div id="snhead" class="snakeBody" style="left: 20px; top: 20px"></div>
+    </div>
+    <script>
+        //SnakeArray = [[parseInt(snake.style.top), parseInt(snake.style.left)]];
+        kierunek = "prawo";
+        interval = setInterval(prawo, 100);
+        sprawdzanieJedzenia = setInterval(sprawdzFruit, 100);
+        document.body.addEventListener("keyup", (e) => {zmien(e.key);});
+        function zmien(klawisz) {
+            console.log(klawisz)
+            //if (parseInt(snake.style.top) % 5 != 0 || parseInt(snake.style.left) % 5 != 0) return;
+            switch (klawisz) {
+                case 'ArrowUp': 
+                    kierunek = "gora";
+                    clearInterval(interval);
+                    interval = setInterval(gora, 100);
+                    break;
+                case 'ArrowDown': 
+                    kierunek = "dol";
+                    clearInterval(interval);
+                    interval = setInterval(dol, 100);
+                    break;
+                case 'ArrowRight': 
+                    kierunek = "prawo";
+                    clearInterval(interval);
+                    interval = setInterval(prawo, 100);
+                    break;
+                case 'ArrowLeft': 
+                    kierunek = "lewo";
+                    clearInterval(interval);
+                    interval = setInterval(lewo, 100);
+                    break;
+            }
+        }
+        function prawo() {
+            //snake.style.left = parseInt(snake.style.left) + 10 + "px";
+ 
+            let snakeParts = document.querySelectorAll(".snakeBody");
+            let p = [snakeParts[0].style.top, parseInt(snakeParts[0].style.left) + 10 + "px"];
+            let dl = snakeParts.length;
+            for(let i = 0; i < dl; i++)
+            {
+                let previousTop = snakeParts[i].style.top;
+                let previousLeft = snakeParts[i].style.left;
+                snakeParts[i].style.top = p[0];
+                snakeParts[i].style.left = p[1];
+                p = [previousTop, previousLeft];
+            }
+        }
+        function lewo() {
+            //snake.style.left = parseInt(snake.style.left) - 10 + "px";
+            let snakeParts = document.querySelectorAll(".snakeBody");
+            let p = [snakeParts[0].style.top, parseInt(snakeParts[0].style.left) - 10 + "px"];
+            let dl = snakeParts.length;
+            for(let i = 0; i < dl; i++)
+            {
+                let previousTop = snakeParts[i].style.top;
+                let previousLeft = snakeParts[i].style.left;
+                snakeParts[i].style.top = p[0];
+                snakeParts[i].style.left = p[1];
+                p = [previousTop, previousLeft];
+            }
+        }
+        function gora() {
+            //snake.style.top = parseInt(snake.style.top) - 10 + "px";
+            let snakeParts = document.querySelectorAll(".snakeBody");
+            let p = [parseInt(snakeParts[0].style.top) - 10 + "px", snakeParts[0].style.left];
+            let dl = snakeParts.length;
+            for(let i = 0; i < dl; i++)
+            {
+                let previousTop = snakeParts[i].style.top;
+                let previousLeft = snakeParts[i].style.left;
+                snakeParts[i].style.top = p[0];
+                snakeParts[i].style.left = p[1];
+                p = [previousTop, previousLeft];
+            }
+        }
+        function dol() {
+            //snake.style.top = parseInt(snake.style.top) + 10 + "px";
+            let snakeParts = document.querySelectorAll(".snakeBody");
+            let p = [parseInt(snakeParts[0].style.top) + 10 + "px", snakeParts[0].style.left];
+            let dl = snakeParts.length;
+            for(let i = 0; i < dl; i++)
+            {
+                let previousTop = snakeParts[i].style.top;
+                let previousLeft = snakeParts[i].style.left;
+                snakeParts[i].style.top = p[0];
+                snakeParts[i].style.left = p[1];
+                p = [previousTop, previousLeft];
+            }
+        }
+        function spawnFruit() {
+            let x = Math.floor(Math.random() * (740 - 20 + 1)) + 20;
+            let y = Math.floor(Math.random() * (740 - 20 + 1)) + 20;
+            console.log(x + " " + y)
+            let jablko = document.createElement("div");
+            jablko.style.top = y - (y % 10) + "px";
+            jablko.style.left = x - (x % 10) + "px";
+            jablko.id = "jablko";
+            plansza.appendChild(jablko);
+        }
+        function addSnakePart() {
+            clearInterval(interval);
+            let SnakeHead = document.querySelector("#snhead");
+            let top, left;
+            let NewSnakePart = document.createElement("div");
+            switch (kierunek) {
+                case 'prawo': 
+                    left = parseInt(SnakeHead.style.left) + 10 + "px";
+                    top = SnakeHead.style.top;
+                    break;
+                case 'lewo': 
+                    left = parseInt(SnakeHead.style.left) - 10 + "px";;
+                    top = SnakeHead.style.top;
+                    break;
+                case 'gora': 
+                    left = SnakeHead.style.left;
+                    top = parseInt(SnakeHead.style.top) - 10 + "px";
+                    break;
+                case 'dol': 
+                    left = SnakeHead.style.left;
+                    top = parseInt(SnakeHead.style.top) + 10 + "px";
+                    break;
+            }
+            NewSnakePart.style.top = top;
+            NewSnakePart.style.left = left;
+            NewSnakePart.className = "snakeBody";
+            SnakeHead.id = 'snhead';
+            plansza.appendChild(NewSnakePart);
+            console.log(document.querySelectorAll(".snakeBody")[0].id)
+            interval = setInterval(window[kierunek], 100);
+        }
+        function sprawdzFruit() {
+            if (snhead.offsetTop == parseInt(jablko.style.top) && snhead.offsetLeft == parseInt(jablko.style.left)) {
+                jablko.remove();
+                spawnFruit();
+                addSnakePart();
+            }
+        }
+        function checkKierunek(x, y) {
+            let snakeParts = document.querySelectorAll(".snakeBody");
+            snakeParts.forEach(part => {
+                if (part.style.left == x && part.style.top == y) return true;
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>
