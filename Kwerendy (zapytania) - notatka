@@ -41,3 +41,52 @@ T: Kwerendy - zapytania
       IS NULL - sprawdzenie wartości pustej
 6) Kwerendy parametryczne
   - to rodzaj kwerendy wybierającej, która po uruchomieniu pobiera od użytkownika parametry kwerendy
+7) Pola obliczeniowe
+  - umożliwiają wykonywanie obliczeń na wartościach pól
+  - obliczenia można wykonywać da pól tekstowych, liczbowych, walutowych, daty i godziny
+  - domyślna nazwa pola to: Wyr#:
+  - pole można dowolnie nazywać, po nazwie pola należy umieścić dwukropek, np. Imię i nazwisko:
+  - wyrażenia można definiować w prosty sposób za pomocą Kontruktora wyrażeń
+8) Agregacja danych
+  - umożliwiają wykonywanie działań na wartościach tego samego pola
+  - obliczenia można wykonywać na danych typu: Liczba, Data/Godzina, Walutowy, Autonumer
+  - wymagane jest wyświetlenie dodatkowego wiersza w szablonie QBE (Widok/Sumy)
+9) Funkcje agregujące:
+  - Grupuj według
+  - Suma
+  - Średnia
+  - Minimum
+  - Maksimum
+  - Policz - zlicza liczbę niepustych wartości poa (rekordów w grupie)
+  - OdchStd - odchylenie standardowe wartości w polu
+  - Wariancja - wariancja wartości pola
+  - Pierwszy
+  - Ostatni
+  - Wyrażenie - pole obliczeniowe zawierające w swoim wyrażeniu funkcję agregującą
+  - Gdzie - kryterium ograniczające liczbę rekordów
+10) Kwerendy funkcjonalne
+  - spełniają określoną funkcję, która polega nie tylko na wybraniu rekordów
+  - typ kwerend wybierających, którym przypisano określone zadanie do wykonania na grupie rekordów (tworzenie tabeli, aktualizacja, dołączanie
+     lub usuwanie rekordów)
+  - zmiany mają trwały charakter
+  - modyfikacje rekordów jednej tabeli można wykonywać bez ograniczeń
+  - modyfikacja rekordów wymaga posiadania odpowiednich praw do wykonania tych operacji
+11) Kwerendy funkcjonalne - rodzaje:
+  a) kwerendy aktualizające
+      - umożliwiają szybką i automatyczną modyfikacje wartości pól w wielu rekordach równocześnie
+      - aktualizacja może dotyczyć wartości pól w jednej tabeli (bez żadnych ograniczeń) lub rekordów w tabelach tworzących
+        relacje (obowiązuje warunek kaskadowej aktualizacji rekordów)
+  b) kwerendy dołączające
+      - umożliwiają dodanie do istniejącej tabeli nowych rekordów pochodzących z tabeli kwerendy źródłowej
+      - docelowa tabela musi już istnieć w BD
+      - rekordy można dopisywać w obrębie tej samej bazy lub innej bazy w MS Access
+      - rekordy można również dopisywać do otwartej tabeli
+  c) kwerendy tworzące tabele
+      - umożliwiają tworzenie kopii zapasowych i archiwizację danych
+      - rezultat zapytania przechowywany jest w postaci trwałej - nowej tabeli
+      - często używane w celu tworzenia tabel pomocniczych, np. wykorzystywanych do generowania
+        raportów
+  d) kwerendy usuwające
+      - umożliwiają usuwanie wielu rekordów jednocześnie
+      - usuwanie może odbywać się w jednej lub w wielu tabelach
+      - wykonanie kwerendy usuwającej (usunięcie rekordów) jest operacją nieodwracalną
