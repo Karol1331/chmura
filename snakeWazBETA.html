@@ -64,7 +64,13 @@
                     p = [snakeParts[0].style.top, parseInt(snakeParts[0].style.left) - 10 + "px"];
                     break;
             }
-            deadCheck(p, snakeParts);
+            if (deadCheck(p, snakeParts))
+            {
+                alert("GAME OVER!");
+                clearInterval(interval);
+                //document.body.removeEventListener("keyup");
+                return;
+            }
             if (parseInt(snhead.style.top) == parseInt(jablko.style.top) && parseInt(snhead.style.left) == parseInt(jablko.style.left)) {
                 jablko.remove();
                 spawnFruit();
@@ -83,26 +89,19 @@
         }
 
         function deadCheck(nextHeadPos, snakeArr) {
-            let isDead = false;
             if (parseInt(nextHeadPos[0]) < 10 || parseInt(nextHeadPos[0]) > 700 || parseInt(nextHeadPos[1]) < 30 || parseInt(nextHeadPos[1]) > 780)
-                isDead = true;
+                return true;
             else 
             {
                 let dl = snakeArr.length;
                 for (let snakePt of snakeArr)
                 {
                     if (snakePt.style.top == nextHeadPos[0] && snakePt.style.left == nextHeadPos[1]) {
-                        isDead = true;
-                        break;
+                        return true;
                     }
                 }
             }
-            if (isDead)
-            {
-                alert("GAME OVER!");
-                clearInterval(interval);
-                //document.body.removeEventListener("keyup");
-            }
+            return false;
         }
 
         function spawnFruit() {
